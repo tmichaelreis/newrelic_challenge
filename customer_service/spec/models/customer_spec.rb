@@ -1,5 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'associations' do
+    it { should belong_to(:company) }
+  end
+
+  context 'validations' do
+    subject { build(:customer) }
+
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+  end
 end
