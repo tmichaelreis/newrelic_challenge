@@ -9,8 +9,8 @@ class CustomersController < ApplicationController
       search_param = query_params[:search]
 
       # Select which queries to chain
-      queries = [].tap { |q| q << :all }
-                  .tap { |q| q << [:search_by_full_name, search_param] if search_param }
+      queries = [:all]
+      queries << [:search_by_full_name, search_param] if search_param
 
       # Apply queries to Customer model
       queries.inject(Customer) { |model, method| model.send(*method) }
