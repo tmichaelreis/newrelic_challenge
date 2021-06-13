@@ -10,8 +10,33 @@ Rails is incredibly convenient for creating REST APIs. Given the simple initial 
 
 ## Getting Started
 
+Make sure Docker is installed and running on your system.
+
 Start the application from the project root using:
 
-`docker-compose up`
+`docker compose up --build`
 
 Then access the app at localhost:3000.
+
+## Testing
+
+### API
+
+Requirements:
+
+- Postgres 9.3 or higher
+- Ruby 3.0.1
+
+To test the Ruby on Rails Customers API ("Customer Service") on your local machine,
+
+1. Install gems:
+
+   `bundle install`
+
+2. Create and migrate the `customer_service_test` database:
+
+   `RAILS_ENV=test rails db:create`
+
+3. Run the test suite:
+
+   `rspec`
