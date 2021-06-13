@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Customer < ApplicationRecord
   include PgSearch::Model
 
@@ -9,7 +11,7 @@ class Customer < ApplicationRecord
   delegate :name, to: :company, prefix: true
 
   pg_search_scope :search_by_full_name,
-                  against: [:first_name, :last_name],
+                  against: %i[first_name last_name],
                   using: {
                     tsearch: { prefix: true }
                   }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Customers API', type: :request do
@@ -21,7 +23,7 @@ RSpec.describe 'Customers API', type: :request do
       it 'returns customer data in the correct shape' do
         get '/customers'
         customer_response = json_body.first
-        expected_keys = ['id', 'first_name', 'last_name', 'company_name']
+        expected_keys = %w[id first_name last_name company_name]
         expect(customer_response.keys).to contain_exactly(*expected_keys)
       end
     end
