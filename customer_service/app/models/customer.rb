@@ -13,4 +13,9 @@ class Customer < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
+
+  # Scope to filter Customers by Company name (case and whitespace insensitive)
+  def self.with_company_name(company_name)
+    joins(:company).where('lower(companies.name) = ?', company_name.downcase.strip)
+  end
 end
