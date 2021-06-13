@@ -79,5 +79,29 @@ RSpec.describe 'Customers API', type: :request do
         expect(returned_customer_ids).to be_empty
       end
     end
+
+    context 'with company filter and name search params' do
+      let(:company) { FactoryBot.create(:company, name: 'New Relic') }
+      let!(:matching_customer) do
+        FactoryBot.create(:customer, first_name: 'Tom', company: company)
+      end
+
+      let!(:same_name_customer) do
+        FactoryBot.create(:customer, first_name: 'Tom')
+      end
+
+      let!(:same_company_customer) do
+        FactoryBot.create(:customer, first_name: 'Janja', company: company)
+      end
+
+      let(:returned_customer_ids) do
+        json_body.map { |customer| customer['id'] }
+      end
+
+      it 'returns only matching customers' do
+        get '/customers', params: { company_name: 'New Relic', search: 'Tom' }
+        expect(returned_customer_ids).to contain_exactly(matching_customer.id)
+      end
+    end
   end
 end
