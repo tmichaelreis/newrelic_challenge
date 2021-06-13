@@ -27,16 +27,48 @@ Requirements:
 - Postgres 9.3 or higher
 - Ruby 3.0.1
 
-To test the Ruby on Rails Customers API ("Customer Service") on your local machine,
+To test the Ruby on Rails Customers API ("Customer Service") on your local machine:
 
-1. Install gems:
+1. Navigate to the `/customer_service` directory.
+
+2. Install gems:
 
    `bundle install`
 
-2. Create and migrate the `customer_service_test` database:
+3. Create and migrate the `customer_service_test` database:
 
    `RAILS_ENV=test rails db:create`
 
-3. Run the test suite:
+4. Run the test suite:
 
    `rspec`
+
+### Frontend Unit tests
+
+TODO
+
+### End-to-end
+
+Requirements:
+
+- Node 14.17
+
+To run the end-to-end cypress integration tests:
+
+1. Start the application using `docker compose up`
+
+2. Navigate to the `/e2e_tests` directory
+
+3. Use `npm run cypress:run` to run tests in a terminal
+
+   or
+
+   `npm run cypress:open` to open the Cypress GUI
+
+_Note:_ these tests depend on seed data in the `/customer_service` Rails project. The seed data is loaded automatically when the Customer Service API container builds, but if that data is modified, it can cause these tests to fail. Reset the API seed data with:
+
+```
+docker compose down
+rm -rf pg_data
+docker compose up --build
+```
