@@ -7,6 +7,18 @@ describe("customers list page", () => {
     cy.url().should("eq", "http://localhost:3000/customers");
   });
 
+  it("has appropriate page title", () => {
+    cy.title().should("eq", "Customers");
+  });
+
+  it("has appropriate meta description", () => {
+    cy.get('meta[name="description"]').should(
+      "have.attr",
+      "content",
+      "Technical challenge for New Relic interview"
+    );
+  });
+
   it("displays page header", () => {
     cy.get("h1").contains("Customers").should("exist");
   });
