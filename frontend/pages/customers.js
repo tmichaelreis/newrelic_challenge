@@ -1,4 +1,5 @@
 import Head from "next/head";
+import CustomersContainer from "../containers/CustomersContainer.js";
 import styles from "../styles/Customers.module.css";
 
 const Customers = () => (
@@ -12,7 +13,9 @@ const Customers = () => (
     </Head>
     <h1 className={styles.header}>Customers</h1>
 
-    <section className={styles.customers}>{/*<CustomersContainer />*/}</section>
+    <section className={styles.customers}>
+      <CustomersContainer />
+    </section>
   </div>
 );
 
