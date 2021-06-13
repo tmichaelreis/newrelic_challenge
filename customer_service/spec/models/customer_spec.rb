@@ -6,7 +6,7 @@ RSpec.describe Customer, type: :model do
   end
 
   context 'validations' do
-    subject { build(:customer) }
+    subject { FactoryBot.build(:customer) }
 
     it { should validate_presence_of(:first_name) }
     it { should validate_presence_of(:last_name) }
