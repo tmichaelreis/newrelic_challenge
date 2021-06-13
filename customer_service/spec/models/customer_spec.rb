@@ -12,6 +12,26 @@ RSpec.describe Customer, type: :model do
     it { should validate_presence_of(:last_name) }
   end
 
+  context 'scopes' do
+    describe '#with_company_name' do
+      let(:company) { FactoryBot.create(:company, name: 'New Relic') }
+      let!(:matching_customer) { FactoryBot.create(:customer, company: company) }
+      let!(:other_customer) { FactoryBot.create(:customer) }
+
+      it 'returns customers by exact company name match' do
+        expect(Customer.with_company_name('New Relic')).to contain_exactly(matching_customer)
+      end
+
+      it 'ignores case discrepancy' do
+        expect(Customer.with_company_name('new relic')).to contain_exactly(matching_customer)
+      end
+
+      it 'ignores extra whitespace' do
+        expect(Customer.with_company_name('  new relic  ')).to contain_exactly(matching_customer)
+      end
+    end
+  end
+
   it 'should return company name' do
     company = FactoryBot.create(:company, name: 'New Relic')
     customer = FactoryBot.create(:customer, company: company)
