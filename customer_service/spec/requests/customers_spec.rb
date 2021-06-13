@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Customers API', type: :request do
   describe 'customers index' do
     before do
-      create_list(:customers, 5)
+      FactoryBot.create_list(:customer, 5)
     end
 
     it 'returns a success' do
