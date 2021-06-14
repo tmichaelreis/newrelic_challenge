@@ -61,7 +61,7 @@ const CustomersContainer = () => {
       </div>
       <CustomerResults
         customers={customers}
-        resultsExpected={customerSearchQuery || companyFilterValue}
+        resultsExpected={!!(customerSearchQuery || companyFilterValue)}
       />
     </Paper>
   );
