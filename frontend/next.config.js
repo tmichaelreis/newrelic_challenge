@@ -16,4 +16,7 @@ module.exports = {
       },
     ];
   },
+  env: {
+    apiUrl: "http://customer-service:4000",
+  },
 };

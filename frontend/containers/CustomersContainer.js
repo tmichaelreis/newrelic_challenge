@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import CustomerSearchInput from "../components/CustomerSearchInput.js";
 import CompanyFilterInput from "../components/CompanyFilterInput.js";
@@ -8,10 +9,10 @@ import Paper from "@material-ui/core/Paper";
 
 import styles from "../styles/CustomersContainer.module.css";
 
-const CustomersContainer = () => {
+const CustomersContainer = ({ companies }) => {
   const router = useRouter();
   const [customers, setCustomers] = useState([]);
-  const [companies, setCompanies] = useState([]);
+  //const [companies, setCompanies] = useState([]);
   const [customerSearchQuery, setCustomerSearchQuery] = useState();
   const [companyFilterValue, setCompanyFilterValue] = useState("");
 
@@ -79,6 +80,10 @@ const CustomersContainer = () => {
       />
     </Paper>
   );
+};
+
+CustomersContainer.propTypes = {
+  companies: PropTypes.array,
 };
 
 export default CustomersContainer;
