@@ -12,7 +12,7 @@ import styles from "../styles/CustomersContainer.module.css";
 const CustomersContainer = ({ companies }) => {
   const router = useRouter();
   const [customers, setCustomers] = useState([]);
-  const [customerSearchQuery, setCustomerSearchQuery] = useState();
+  const [customerSearchQuery, setCustomerSearchQuery] = useState("");
   const [companyFilterValue, setCompanyFilterValue] = useState("");
 
   // Load existing search query on first render.
