@@ -5,7 +5,6 @@
 import React from "react";
 import { createMount } from "@material-ui/core/test-utils";
 import CustomersContainer from "../../containers/CustomersContainer.js";
-import { act } from "react-dom/test-utils";
 
 // Mock useRouter and fetch
 const useRouter = jest.spyOn(require("next/router"), "useRouter");
@@ -24,7 +23,7 @@ describe("CustomerResults", () => {
     mount = createMount();
 
     const mockResponse = JSON.stringify([
-      { id: 1, first_name: "Test", last_name: "User" },
+      { id: 1, firstName: "Test", lastName: "User" },
     ]);
     fetch.mockResponse(mockResponse);
   });
