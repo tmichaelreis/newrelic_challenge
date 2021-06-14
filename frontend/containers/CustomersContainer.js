@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import CustomerSearchInput from "../components/CustomerSearchInput.js";
 import CompanyFilterInput from "../components/CompanyFilterInput.js";
@@ -15,6 +15,24 @@ const CustomersContainer = () => {
   const [customerSearchQuery, setCustomerSearchQuery] = useState();
   const [companyFilterValue, setCompanyFilterValue] = useState("");
 
+  // Load existing search query on first render.
+  // The query string isn't available at first load,
+  // so we have to wait for the NextJS router to be ready
+  useEffect(() => {
+    const existingSearchQuery = router.query["search"];
+    if (existingSearchQuery) {
+      setCustomerSearchQuery(existingSearchQuery);
+    }
+  }, [router.isReady]);
+
+  // Use query state change to trigger customers search
+  useEffect(() => {
+    // Get customers from API
+    fetch(`/api/customers?search=${customerSearchQuery}`)
+      .then((response) => response.json())
+      .then((data) => setCustomers(data));
+  }, [customerSearchQuery]);
+
   // TODO: prefetch companies list on server side
 
   const handleUserSearch = (event) => {
@@ -29,13 +47,6 @@ const CustomersContainer = () => {
     router.replace({ pathname: currentPath, query: query }, undefined, {
       shallow: true,
     });
-
-    // TODO: set loading
-
-    // Get customers from API
-    fetch(`/api/customers?search=${searchParam}`)
-      .then((response) => response.json())
-      .then((data) => setCustomers(data));
   };
 
   const handleCompanyFilter = (event) => {
