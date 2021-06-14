@@ -23,12 +23,15 @@ const renderCustomerResults = (customers) => (
   </TableBody>
 );
 
-const renderNoResults = (resultsExpected) =>
-  resultsExpected ? (
-    <p>No Customers found. Try adjusting your search and filter options.</p>
-  ) : (
-    <p>Use the search and filter options above to view Customer results.</p>
-  );
+const renderNoResults = (resultsExpected) => (
+  <div className={styles.noresults}>
+    {resultsExpected ? (
+      <p>No Customers found. Try adjusting your search and filter options.</p>
+    ) : (
+      <p>Use the search and filter options above to view Customer results.</p>
+    )}
+  </div>
+);
 
 const CustomerResults = ({ customers, resultsExpected }) => {
   return (

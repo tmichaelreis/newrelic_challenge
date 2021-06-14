@@ -9,19 +9,21 @@ import styles from "../styles/CustomersContainer.module.css";
 
 const CustomersContainer = () => {
   const [customers, setCustomers] = useState([]);
-  const [companies, setCompanies] = useState([
-    { id: 1, name: "New Relic" },
-    { id: 2, name: "La Sportiva" },
-  ]);
+  const [companies, setCompanies] = useState([]);
+  const [customerSearchQuery, setCustomerSearchQuery] = useState();
   const [companyFilterValue, setCompanyFilterValue] = useState("");
 
   // TODO: prefetch companies list on server side
 
   const handleUserSearch = (event) => {
-    console.log(event.target.value);
+    const searchParam = event.target.value;
+    setCustomerSearchQuery(searchParam);
     // TODO: update param in URL
     // TODO: set loading
-    // TODO: handle search request to api
+
+    fetch(`/api/customers?search=${searchParam}`)
+      .then((response) => response.json())
+      .then((data) => setCustomers(data));
   };
 
   const handleCompanyFilter = (event) => {
@@ -45,7 +47,10 @@ const CustomersContainer = () => {
           />
         </div>
       </div>
-      <CustomerResults customers={customers} />
+      <CustomerResults
+        customers={customers}
+        resultsExpected={customerSearchQuery || companyFilterValue !== ""}
+      />
     </Paper>
   );
 };

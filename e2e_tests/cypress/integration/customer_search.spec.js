@@ -8,7 +8,7 @@ describe("customer name search", () => {
     cy.get("#customer-results").within(($customersTable) => {
       // Assert matching user is included
       cy.get("td").contains("Tom").should("exist");
-      cy.get("td").conains("Reis").should("exist");
+      cy.get("td").contains("Reis").should("exist");
       cy.get("td").contains("New Relic").should("exist");
 
       // Assert non-matching users aren't included
@@ -21,7 +21,7 @@ describe("customer name search", () => {
     cy.get("#customer-results").within(($customersTable) => {
       // Assert matching user is included
       cy.get("td").contains("Tom").should("exist");
-      cy.get("td").conains("Reis").should("exist");
+      cy.get("td").contains("Reis").should("exist");
       cy.get("td").contains("New Relic").should("exist");
 
       // Assert non-matching users aren't included
