@@ -12,7 +12,7 @@ import styles from "../styles/CustomersContainer.module.css";
 const CustomersContainer = ({ companies }) => {
   const router = useRouter();
   const [customers, setCustomers] = useState([]);
-  const [customerSearchQuery, setCustomerSearchQuery] = useState();
+  const [customerSearchQuery, setCustomerSearchQuery] = useState("");
   const [companyFilterValue, setCompanyFilterValue] = useState("");
 
   // Load existing search query on first render.
@@ -27,13 +27,13 @@ const CustomersContainer = ({ companies }) => {
 
   // Use query state change to trigger customers search
   useEffect(() => {
-    // Get customers from API
-    fetch(`/api/customers?search=${customerSearchQuery}`)
-      .then((response) => response.json())
-      .then((data) => setCustomers(data));
+    // Get customers from API if search query is not empty
+    if (!!customerSearchQuery) {
+      fetch(`/api/customers?search=${customerSearchQuery}`)
+        .then((response) => response.json())
+        .then((data) => setCustomers(data));
+    }
   }, [customerSearchQuery]);
-
-  // TODO: prefetch companies list on server side
 
   const handleUserSearch = (event) => {
     const searchParam = event.target.value;
