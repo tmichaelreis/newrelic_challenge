@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 
 // Material UI
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,11 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-const useStyles = makeStyles({
-  tableContainer: {
-    padding: 20,
-  },
-});
+import styles from "../styles/CustomerResults.module.css";
 
 const renderCustomerResults = (customers) => (
   <TableBody>
@@ -36,15 +31,9 @@ const renderNoResults = (resultsExpected) =>
   );
 
 const CustomerResults = ({ customers, resultsExpected }) => {
-  const classes = useStyles();
-
   return (
-    <TableContainer
-      id="customer-results"
-      component={Paper}
-      className={classes.tableContainer}
-    >
-      <Table className={classes.table}>
+    <TableContainer id="customer-results" className={styles.results}>
+      <Table className={styles.table}>
         <TableHead>
           <TableRow>
             <TableCell>First Name</TableCell>
