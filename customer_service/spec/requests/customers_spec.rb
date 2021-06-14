@@ -63,7 +63,7 @@ RSpec.describe 'Customers API', type: :request do
     end
 
     context 'with company filter param' do
-      let(:company) { FactoryBot.create(:company, name: 'New Relic') }
+      let(:company) { FactoryBot.create(:company) }
       let!(:company_customer) { FactoryBot.create(:customer, company: company) }
       let!(:other_customer) { FactoryBot.create(:customer) }
 
@@ -72,18 +72,19 @@ RSpec.describe 'Customers API', type: :request do
       end
 
       it 'returns company customers' do
-        get '/customers', params: { company_name: 'New Relic' }
+        get '/customers', params: { company_id: company.id }
         expect(returned_customer_ids).to contain_exactly(company_customer.id)
       end
 
       it 'returns no customers if none match company filter' do
-        get '/customers', params: { company_name: 'Another Company' }
+        no_user_company = FactoryBot.create(:company)
+        get '/customers', params: { company_id: no_user_company.id }
         expect(returned_customer_ids).to be_empty
       end
     end
 
     context 'with company filter and name search params' do
-      let(:company) { FactoryBot.create(:company, name: 'New Relic') }
+      let(:company) { FactoryBot.create(:company) }
       let!(:matching_customer) do
         FactoryBot.create(:customer, first_name: 'Tom', company: company)
       end
@@ -101,7 +102,7 @@ RSpec.describe 'Customers API', type: :request do
       end
 
       it 'returns only matching customers' do
-        get '/customers', params: { company_name: 'New Relic', search: 'Tom' }
+        get '/customers', params: { company_id: company.id, search: 'Tom' }
         expect(returned_customer_ids).to contain_exactly(matching_customer.id)
       end
     end
