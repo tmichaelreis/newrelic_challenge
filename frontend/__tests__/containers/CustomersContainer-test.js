@@ -29,11 +29,12 @@ describe("CustomerResults", () => {
     fetch.mockResponse(mockResponse);
   });
 
-  /*it("renders without breaking", async () => {
+  it("does not call api on render if search query is empty", () => {
     useRouter.mockImplementation(() => ({ query: {} }));
+
     const wrapper = mount(<CustomersContainer companies={[]} />);
-    await waitForComponentToPaint(wrapper);
-  });*/
+    expect(fetch.mock.calls.length).toEqual(0);
+  });
 
   it("updates search input based on route", async () => {
     useRouter.mockImplementation(() => ({ query: { search: "foobar" } }));
