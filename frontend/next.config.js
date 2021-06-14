@@ -8,4 +8,12 @@ module.exports = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://customer-service:4000/:path*",
+      },
+    ];
+  },
 };

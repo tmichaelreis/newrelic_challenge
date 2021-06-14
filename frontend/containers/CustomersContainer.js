@@ -18,10 +18,13 @@ const CustomersContainer = () => {
   // TODO: prefetch companies list on server side
 
   const handleUserSearch = (event) => {
-    console.log(event.target.value);
+    const searchParam = event.target.value;
     // TODO: update param in URL
     // TODO: set loading
-    // TODO: handle search request to api
+
+    fetch(`/api/customers?search=${searchParam}`)
+      .then((response) => response.json)
+      .then((data) => console.log(data));
   };
 
   const handleCompanyFilter = (event) => {
