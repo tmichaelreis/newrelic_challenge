@@ -5,6 +5,7 @@
 import React from "react";
 import { createMount } from "@material-ui/core/test-utils";
 import CustomersContainer from "../../containers/CustomersContainer.js";
+import { act } from "react-dom/test-utils";
 
 // Mock useRouter and fetch
 const useRouter = jest.spyOn(require("next/router"), "useRouter");
