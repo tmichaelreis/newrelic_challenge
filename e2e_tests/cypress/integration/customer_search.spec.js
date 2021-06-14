@@ -42,4 +42,26 @@ describe("customer name search", () => {
     cy.get("#customer-search").clear();
     cy.url().should("not.include", "?search");
   });
+
+  describe("visiting a page with existing query string", () => {
+    beforeEach(() => {
+      cy.visit("/customers?search=Tom");
+    });
+
+    it("populates search input", () => {
+      cy.get("#customer-search").should("have.value", "Tom");
+    });
+
+    it("populates customer results", () => {
+      cy.get("#customer-results").within(($customersTable) => {
+        // Assert matching user is included
+        cy.get("td").contains("Tom").should("exist");
+        cy.get("td").contains("Reis").should("exist");
+        cy.get("td").contains("New Relic").should("exist");
+
+        // Assert non-matching users aren't included
+        cy.get("td").contains("Adam").should("not.exist");
+      });
+    });
+  });
 });
