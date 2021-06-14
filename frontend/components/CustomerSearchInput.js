@@ -7,13 +7,14 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import styles from "../styles/CustomerSearchInput.module.css";
 
-const CustomerSearchInput = ({ onChange }) => (
+const CustomerSearchInput = ({ onChange, value }) => (
   <TextField
     id="customer-search"
     type="search"
     label="Search by Customer Name"
     className={styles.input}
     onChange={onChange}
+    value={value}
     InputProps={{
       endAdornment: (
         <InputAdornment position="end">
@@ -21,6 +22,7 @@ const CustomerSearchInput = ({ onChange }) => (
         </InputAdornment>
       ),
     }}
+    InputLabelProps={{ shrink: !!value }}
   />
 );
 

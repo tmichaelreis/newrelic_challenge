@@ -60,7 +60,10 @@ const CustomersContainer = () => {
     <Paper elevation={6}>
       <div className={styles.inputs}>
         <div className={styles.inputContainer}>
-          <CustomerSearchInput onChange={handleUserSearch} />
+          <CustomerSearchInput
+            onChange={handleUserSearch}
+            value={customerSearchQuery}
+          />
         </div>
         <div className={styles.inputContainer}>
           <CompanyFilterInput
