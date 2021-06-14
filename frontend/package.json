@@ -20,6 +20,7 @@
     "enzyme": "^3.11.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.4",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.3.1"
   }
 }
