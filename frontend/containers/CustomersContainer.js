@@ -12,7 +12,6 @@ import styles from "../styles/CustomersContainer.module.css";
 const CustomersContainer = ({ companies }) => {
   const router = useRouter();
   const [customers, setCustomers] = useState([]);
-  //const [companies, setCompanies] = useState([]);
   const [customerSearchQuery, setCustomerSearchQuery] = useState();
   const [companyFilterValue, setCompanyFilterValue] = useState("");
 
