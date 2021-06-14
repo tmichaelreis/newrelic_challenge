@@ -39,8 +39,12 @@ const CustomerResults = ({ customers, resultsExpected }) => {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table id="customer-results" className={classes.table}>
+    <TableContainer
+      id="customer-results"
+      component={Paper}
+      className={classes.tableContainer}
+    >
+      <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>First Name</TableCell>

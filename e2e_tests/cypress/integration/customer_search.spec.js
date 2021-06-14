@@ -29,6 +29,13 @@ describe("customer name search", () => {
     });
   });
 
+  it("displays no results message if no matches", () => {
+    cy.get("#customer-search").clear().type("not a valid name match");
+    cy.get("#customer-results").contains(
+      "No Customers found. Try adjusting your search and filter options."
+    );
+  });
+
   it("appends search query to URL", () => {
     cy.get("#customer-search").clear().type("Tom");
     cy.url().should("include", "?search=Tom");
