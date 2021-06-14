@@ -34,7 +34,7 @@ const CustomersContainer = ({ companies }) => {
     let ignore = false;
 
     // Get customers from API if search query is not empty
-    if (!!customerSearchQuery) {
+    if (!!(customerSearchQuery || companyId)) {
       getCustomerData({
         search: customerSearchQuery,
         companyFilter: companyId,
@@ -51,7 +51,7 @@ const CustomersContainer = ({ companies }) => {
     return () => {
       ignore = true;
     };
-  }, [customerSearchQuery]);
+  }, [customerSearchQuery, companyId]);
 
   const handleUserSearch = (event) => {
     const searchParam = event.target.value;
@@ -68,11 +68,21 @@ const CustomersContainer = ({ companies }) => {
   };
 
   const handleCompanyFilter = (event) => {
-    setCompanyId(event.target.value);
-    // TODO: get company name from event
-    // TODO: update param in URL
-    // TODO: set loading
-    // TODO: handle filter request to api
+    const newCompanyId = event.target.value;
+    setCompanyId(newCompanyId);
+
+    const companyName = companies.find(
+      (company) => company.id === Number(newCompanyId)
+    )?.name;
+
+    // Set url param
+    const currentPath = router.pathname;
+    const query = companyName
+      ? { filter_by_company_name: companyName }
+      : undefined;
+    router.replace({ pathname: currentPath, query: query }, undefined, {
+      shallow: true,
+    });
   };
 
   return (

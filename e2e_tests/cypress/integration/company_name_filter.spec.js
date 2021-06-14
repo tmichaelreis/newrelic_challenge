@@ -19,7 +19,7 @@ describe("company name filter", () => {
       cy.get("td").contains("Ondra").should("exist");
       cy.get("td").contains("Brooke").should("exist");
       cy.get("td").contains("Raboutou").should("exist");
-      cy.get("td").contains("La Sportiva").should("have.count", 2);
+      cy.get("td:contains(La Sportiva)").should("have.length", 2);
 
       // Other companies and customers are not listed
       cy.get("td").contains("Tom").should("not.exist");
