@@ -14,7 +14,9 @@ describe("CompanyFilterInput", () => {
   });
 
   it("includes empty option", () => {
-    const input = mount(<CompanyFilterInput companies={[]} />);
+    const input = mount(
+      <CompanyFilterInput companies={[]} selectedCompany={""} />
+    );
 
     expect(input.find("input").props().value).toEqual("");
     expect(input.text()).toEqual("All Companies");
