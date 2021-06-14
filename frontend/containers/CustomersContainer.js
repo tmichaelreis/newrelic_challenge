@@ -23,8 +23,8 @@ const CustomersContainer = () => {
     // TODO: set loading
 
     fetch(`/api/customers?search=${searchParam}`)
-      .then((response) => response.json)
-      .then((data) => console.log(data));
+      .then((response) => response.json())
+      .then((data) => setCustomers(data));
   };
 
   const handleCompanyFilter = (event) => {
