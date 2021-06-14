@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import CustomerSearchInput from "../components/CustomerSearchInput.js";
 import CompanyFilterInput from "../components/CompanyFilterInput.js";
 import CustomerResults from "../components/CustomerResults";
@@ -8,6 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import styles from "../styles/CustomersContainer.module.css";
 
 const CustomersContainer = () => {
+  const router = useRouter();
   const [customers, setCustomers] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [customerSearchQuery, setCustomerSearchQuery] = useState();
@@ -17,10 +19,20 @@ const CustomersContainer = () => {
 
   const handleUserSearch = (event) => {
     const searchParam = event.target.value;
+
+    // Update search query in state
     setCustomerSearchQuery(searchParam);
-    // TODO: update param in URL
+
+    // Set url param
+    const currentPath = router.pathname;
+    const query = searchParam ? { search: searchParam } : undefined;
+    router.replace({ pathname: currentPath, query: query }, undefined, {
+      shallow: true,
+    });
+
     // TODO: set loading
 
+    // Get customers from API
     fetch(`/api/customers?search=${searchParam}`)
       .then((response) => response.json())
       .then((data) => setCustomers(data));
@@ -49,7 +61,7 @@ const CustomersContainer = () => {
       </div>
       <CustomerResults
         customers={customers}
-        resultsExpected={customerSearchQuery || companyFilterValue !== ""}
+        resultsExpected={customerSearchQuery || companyFilterValue}
       />
     </Paper>
   );

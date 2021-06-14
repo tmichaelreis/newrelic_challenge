@@ -36,8 +36,10 @@ describe("customer name search", () => {
     );
   });
 
-  it("appends search query to URL", () => {
+  it("modifies search query in URL", () => {
     cy.get("#customer-search").clear().type("Tom");
     cy.url().should("include", "?search=Tom");
+    cy.get("#customer-search").clear();
+    cy.url().should("not.include", "?search");
   });
 });
