@@ -1,23 +1,52 @@
 import { useState } from "react";
 import CustomerSearchInput from "../components/CustomerSearchInput.js";
+import CompanyFilterInput from "../components/CompanyFilterInput.js";
 import CustomerResults from "../components/CustomerResults";
+
+import Paper from "@material-ui/core/Paper";
+
+import styles from "../styles/CustomersContainer.module.css";
 
 const CustomersContainer = () => {
   const [customers, setCustomers] = useState([]);
+  const [companies, setCompanies] = useState([
+    { id: 1, name: "New Relic" },
+    { id: 2, name: "La Sportiva" },
+  ]);
+  const [companyFilterValue, setCompanyFilterValue] = useState("");
 
-  const handleUserSearch = (value) => {
-    console.log(value);
+  // TODO: prefetch companies list on server side
+
+  const handleUserSearch = (event) => {
+    console.log(event.target.value);
     // TODO: update param in URL
     // TODO: set loading
-    // TODO: handle request to api
+    // TODO: handle search request to api
+  };
+
+  const handleCompanyFilter = (event) => {
+    setCompanyFilterValue(event.target.value);
+    // TODO: update param in URL
+    // TODO: set loading
+    // TODO: handle filter request to api
   };
 
   return (
-    <div>
-      <CustomerSearchInput onChange={handleUserSearch} />
-      <div>TODO: filter</div>
+    <Paper elevation={6}>
+      <div className={styles.inputs}>
+        <div className={styles.inputContainer}>
+          <CustomerSearchInput onChange={handleUserSearch} />
+        </div>
+        <div className={styles.inputContainer}>
+          <CompanyFilterInput
+            onChange={handleCompanyFilter}
+            companies={companies}
+            selectedCompany={companyFilterValue}
+          />
+        </div>
+      </div>
       <CustomerResults customers={customers} />
-    </div>
+    </Paper>
   );
 };
 

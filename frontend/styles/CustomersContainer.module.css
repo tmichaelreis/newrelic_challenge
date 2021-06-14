@@ -1,0 +1,9 @@
+.inputs {
+  padding: 1rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.inputContainer {
+  min-width: 30%;
+}
