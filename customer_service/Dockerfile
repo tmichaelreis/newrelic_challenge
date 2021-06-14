@@ -20,4 +20,6 @@ RUN chmod +x /app/customer_service/entrypoint.sh
 
 ENTRYPOINT [ "sh", "/app/customer_service/entrypoint.sh" ]
 
-CMD [ "bundle", "exec", "rails", "s", "-p", "4000" ]
+EXPOSE 4000
+
+CMD [ "bundle", "exec", "rails", "s", "-p", "4000", "-b", "0.0.0.0" ]
