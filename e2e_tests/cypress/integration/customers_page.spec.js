@@ -24,9 +24,10 @@ describe("customers list page", () => {
   });
 
   it("has user search input", () => {
-    cy.get("#customer-search")
-      .invoke("attr", "placeholder")
-      .should("contain", "Search Customers by First or Last name");
+    cy.get("#customer-search-label").should(
+      "have.text",
+      "Search by Customer Name"
+    );
   });
 
   it("has company name filter", () => {
