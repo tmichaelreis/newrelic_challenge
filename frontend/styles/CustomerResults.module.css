@@ -4,3 +4,8 @@
 
 .table {
 }
+
+.noresults {
+  text-align: center;
+  padding: 2rem;
+}
