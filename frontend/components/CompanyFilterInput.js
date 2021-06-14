@@ -7,9 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import styles from "../styles/CompanyFilterInput.module.css";
 
-const CompanyFilterInput = ({ companies, onChange }) => {
-  const [selectedCompany, setSelectedCompany] = useState("");
-
+const CompanyFilterInput = ({ companies, onChange, selectedCompany }) => {
   return (
     <Select
       value={selectedCompany}
