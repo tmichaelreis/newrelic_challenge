@@ -34,15 +34,9 @@ describe("customers list page", () => {
     cy.get("#company-name-filter").should("have.text", "All Companies");
   });
 
-  it("displays all seeded users", () => {
-    cy.get("#customer-results").within(($customersTable) => {
-      cy.get("td").contains("Tom").should("exist");
-      cy.get("td").conains("Reis").should("exist");
-      cy.get("td").contains("New Relic").should("exist");
-
-      cy.get("td").contains("Adam").should("exist");
-      cy.get("td").conains("Ondra").should("exist");
-      cy.get("td").contains("La Sportiva").should("exist");
-    });
+  it("displays search or filter prompt", () => {
+    cy.get("#customer-results").contains(
+      "Use the search and filter options above to view Customer results."
+    );
   });
 });
