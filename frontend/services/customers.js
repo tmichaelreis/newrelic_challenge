@@ -1,5 +1,8 @@
 export const getCustomerData = ({ search, companyFilter }) => {
-  return fetch(`/api/customers?search=${search}`).then((response) =>
-    response.json()
-  );
+  const promise = new Promise(async (resolve) => {
+    const response = await fetch(`/api/customers?search=${search}`);
+    const data = await response.json();
+    resolve(data);
+  });
+  return promise;
 };

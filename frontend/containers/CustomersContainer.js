@@ -30,15 +30,27 @@ const CustomersContainer = ({ companies }) => {
 
   // Use query state change to trigger customers search
   useEffect(() => {
+    // Use the ignore flag to enforce effect order
+    let ignore = false;
+
     // Get customers from API if search query is not empty
     if (!!customerSearchQuery) {
       getCustomerData({
         search: customerSearchQuery,
         companyFilter: companyId,
-      }).then((data) => setCustomers(data));
+      }).then((data) => {
+        if (!ignore) {
+          setCustomers(data);
+        }
+      });
     } else {
       setCustomers([]);
     }
+
+    // Set flag to ignore out of order requests
+    return () => {
+      ignore = true;
+    };
   }, [customerSearchQuery]);
 
   const handleUserSearch = (event) => {

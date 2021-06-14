@@ -12,23 +12,16 @@ describe("customers API service", () => {
 
   it("returns a Promise", () => {
     const result = getCustomerData(searchArguments);
-    expect(typeof result).toEqual("Promise");
+    expect(typeof result.then).toEqual("function");
   });
 
   it("fetches customer data", () => {
     const result = getCustomerData(searchArguments);
-    let data;
 
-    result.then((response) => (data = response));
-    expect(data).toEqual({ id: 1, firstName: "Test", lastName: "User" });
-  });
-
-  it("is cancellable", () => {
-    const result = getCustomerData(searchArguments);
-    result.cancel();
-
-    expect(() => {
-      result.resolve("test");
-    }).toThrow();
+    result.then((response) => {
+      expect(response).toEqual([
+        { id: 1, firstName: "Test", lastName: "User" },
+      ]);
+    });
   });
 });
