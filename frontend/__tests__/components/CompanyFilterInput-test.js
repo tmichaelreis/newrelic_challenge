@@ -16,30 +16,7 @@ describe("CompanyFilterInput", () => {
   it("includes empty option", () => {
     const input = mount(<CompanyFilterInput companies={[]} />);
 
-    expect(input.find("select").props().value).toEq("");
-    expect(input.find("select").props().text).toEq("All Companies");
-  });
-
-  it("includes options for all organizations", () => {
-    const companies = [
-      {
-        id: 1,
-        name: "New Relic",
-      },
-      {
-        id: 2,
-        name: "La Sportiva",
-      },
-    ];
-
-    const input = mount(<CompanyFilterInput companies={companies} />);
-
-    expect(input.find("select").find("option")).toHaveLength(3);
-    expect(input.find("select").find("option").contains("New Relic")).toBe(
-      true
-    );
-    expect(input.find("select").find("option").contains("La Sportiva")).toBe(
-      true
-    );
+    expect(input.find("input").props().value).toEqual("");
+    expect(input.text()).toEqual("All Companies");
   });
 });

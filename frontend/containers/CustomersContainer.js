@@ -30,11 +30,15 @@ const CustomersContainer = () => {
   return (
     <Paper elevation={6}>
       <Box className={styles.inputs}>
-        <CustomerSearchInput onChange={handleUserSearch} />
-        <CompanyFilterInput
-          onChange={handleCompanyFilter}
-          companies={companies}
-        />
+        <div className={styles.inputContainer}>
+          <CustomerSearchInput onChange={handleUserSearch} />
+        </div>
+        <div className={styles.inputContainer}>
+          <CompanyFilterInput
+            onChange={handleCompanyFilter}
+            companies={companies}
+          />
+        </div>
       </Box>
       <CustomerResults customers={customers} />
     </Paper>
