@@ -45,9 +45,17 @@ To test the Ruby on Rails Customers API ("Customer Service") on your local machi
 
 ### Frontend Unit tests
 
-TODO
+Requirements:
 
-### End-to-end
+- Node 14.17
+
+1. Navigate to the `frontend` directory
+
+2. Install all npm packages with `npm install`
+
+3. Run tests with `npm run test`
+
+### End-to-end tests
 
 Requirements:
 
