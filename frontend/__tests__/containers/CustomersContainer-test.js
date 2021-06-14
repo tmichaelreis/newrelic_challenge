@@ -24,7 +24,7 @@ describe("CustomerResults", () => {
     mount = createMount();
 
     const mockResponse = JSON.stringify([
-      { id: 1, first_name: "Test", last_name: "User" },
+      { id: 1, firstName: "Test", lastName: "User" },
     ]);
     fetch.mockResponse(mockResponse);
   });

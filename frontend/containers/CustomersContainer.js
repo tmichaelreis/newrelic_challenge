@@ -5,6 +5,9 @@ import CustomerSearchInput from "../components/CustomerSearchInput.js";
 import CompanyFilterInput from "../components/CompanyFilterInput.js";
 import CustomerResults from "../components/CustomerResults";
 
+// Services
+import { getCustomerData } from "../services/customers.js";
+
 import Paper from "@material-ui/core/Paper";
 
 import styles from "../styles/CustomersContainer.module.css";
@@ -13,7 +16,7 @@ const CustomersContainer = ({ companies }) => {
   const router = useRouter();
   const [customers, setCustomers] = useState([]);
   const [customerSearchQuery, setCustomerSearchQuery] = useState("");
-  const [companyFilterValue, setCompanyFilterValue] = useState("");
+  const [companyId, setCompanyId] = useState("");
 
   // Load existing search query on first render.
   // The query string isn't available at first load,
@@ -27,12 +30,27 @@ const CustomersContainer = ({ companies }) => {
 
   // Use query state change to trigger customers search
   useEffect(() => {
+    // Use the ignore flag to enforce effect order
+    let ignore = false;
+
     // Get customers from API if search query is not empty
     if (!!customerSearchQuery) {
-      fetch(`/api/customers?search=${customerSearchQuery}`)
-        .then((response) => response.json())
-        .then((data) => setCustomers(data));
+      getCustomerData({
+        search: customerSearchQuery,
+        companyFilter: companyId,
+      }).then((data) => {
+        if (!ignore) {
+          setCustomers(data);
+        }
+      });
+    } else {
+      setCustomers([]);
     }
+
+    // Set flag to ignore out of order requests
+    return () => {
+      ignore = true;
+    };
   }, [customerSearchQuery]);
 
   const handleUserSearch = (event) => {
@@ -50,7 +68,8 @@ const CustomersContainer = ({ companies }) => {
   };
 
   const handleCompanyFilter = (event) => {
-    setCompanyFilterValue(event.target.value);
+    setCompanyId(event.target.value);
+    // TODO: get company name from event
     // TODO: update param in URL
     // TODO: set loading
     // TODO: handle filter request to api
@@ -69,13 +88,13 @@ const CustomersContainer = ({ companies }) => {
           <CompanyFilterInput
             onChange={handleCompanyFilter}
             companies={companies}
-            selectedCompany={companyFilterValue}
+            selectedCompany={companyId}
           />
         </div>
       </div>
       <CustomerResults
         customers={customers}
-        resultsExpected={!!(customerSearchQuery || companyFilterValue)}
+        resultsExpected={!!(customerSearchQuery || companyId)}
       />
     </Paper>
   );

@@ -43,6 +43,23 @@ describe("customer name search", () => {
     cy.url().should("not.include", "?search");
   });
 
+  it("clears results when clearing search input", () => {
+    cy.get("#customer-search").clear().type("Tom");
+
+    // Make sure results initially appear
+    cy.get("#customer-results").contains("Tom").should("exist");
+
+    cy.get("#customer-search").clear();
+
+    // Assert user results no longer exist
+    cy.get("#customer-results").contains("Tom").should("not.exist");
+
+    // Assert empty query message shows
+    cy.get("#customer-results").contains(
+      "Use the search and filter options above to view Customer results."
+    );
+  });
+
   describe("visiting a page with existing query string", () => {
     beforeEach(() => {
       cy.visit("/customers?search=Tom");
