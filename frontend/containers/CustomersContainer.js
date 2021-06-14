@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CustomerSearchInput from "../components/CustomerSearchInput.js";
+import CompanyFilterInput from "../components/CompanyFilterInput.js";
 import CustomerResults from "../components/CustomerResults";
 
 import Paper from "@material-ui/core/Paper";
@@ -9,19 +10,31 @@ import styles from "../styles/CustomersContainer.module.css";
 
 const CustomersContainer = () => {
   const [customers, setCustomers] = useState([]);
+  const [companies, setCompanies] = useState([]);
+
+  // TODO: prefetch companies list on server side
 
   const handleUserSearch = (event) => {
     console.log(event.target.value);
     // TODO: update param in URL
     // TODO: set loading
-    // TODO: handle request to api
+    // TODO: handle search request to api
+  };
+
+  const handleCompanyFilter = (event) => {
+    // TODO: update param in URL
+    // TODO: set loading
+    // TODO: handle filter request to api
   };
 
   return (
     <Paper elevation={6}>
       <Box className={styles.inputs}>
         <CustomerSearchInput onChange={handleUserSearch} />
-        <div>TODO: filter</div>
+        <CompanyFilterInput
+          onChange={handleCompanyFilter}
+          companies={companies}
+        />
       </Box>
       <CustomerResults customers={customers} />
     </Paper>
