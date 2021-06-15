@@ -94,14 +94,8 @@ const CustomersContainer = ({ companies }) => {
     // Update search query in state
     setCustomerSearchQuery(searchParam);
 
+    // Set Query String param
     addToQueryString({ search: searchParam });
-
-    // Set url param
-    /*const currentPath = router.pathname;
-    const query = searchParam ? { search: searchParam } : undefined;
-    router.replace({ pathname: currentPath, query: query }, undefined, {
-      shallow: true,
-    });*/
   };
 
   const handleCompanyFilter = (event) => {
@@ -115,17 +109,8 @@ const CustomersContainer = ({ companies }) => {
       (company) => company.id === Number(newCompanyId)
     )?.name;
 
+    // Set Query String param
     addToQueryString({ filter_by_company_name: companyName });
-
-    /*
-    // Set url param
-    const currentPath = router.pathname;
-    const query = companyName
-      ? { filter_by_company_name: companyName }
-      : undefined;
-    router.replace({ pathname: currentPath, query: query }, undefined, {
-      shallow: true,
-    });*/
   };
 
   return (
