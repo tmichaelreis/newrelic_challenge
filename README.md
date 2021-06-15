@@ -14,7 +14,7 @@ Make sure Docker is installed and running on your system.
 
 Start the application from the project root using:
 
-`docker compose up --build`
+`docker compose up -d --build`
 
 Then access the app at localhost:3000.
 
@@ -76,7 +76,7 @@ To run the end-to-end cypress integration tests:
 _Note:_ these tests depend on seed data in the `/customer_service` Rails project. The seed data is loaded automatically when the Customer Service API container builds, but if that data is modified, it can cause these tests to fail. Reset the API seed data with:
 
 ```
-docker compose down
-rm -rf pg_data
+docker compose down --volumes
+docker volume rm newrelic_challenge_db
 docker compose up --build
 ```
