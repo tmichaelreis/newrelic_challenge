@@ -23,8 +23,17 @@ const CustomersContainer = ({ companies }) => {
   // so we have to wait for the NextJS router to be ready
   useEffect(() => {
     const existingSearchQuery = router.query["search"];
+    const existingCompanyFilter = router.query["filter_by_company_name"];
+
     if (existingSearchQuery) {
       setCustomerSearchQuery(existingSearchQuery);
+    }
+
+    if (existingCompanyFilter) {
+      const existingCompanyId = companies.find(
+        (company) => company.name === existingCompanyFilter
+      )?.id;
+      setCompanyId(existingCompanyId);
     }
   }, [router.isReady]);
 
@@ -69,8 +78,11 @@ const CustomersContainer = ({ companies }) => {
 
   const handleCompanyFilter = (event) => {
     const newCompanyId = event.target.value;
+
+    // Update company search in state
     setCompanyId(newCompanyId);
 
+    // Find company name by ID
     const companyName = companies.find(
       (company) => company.id === Number(newCompanyId)
     )?.name;
