@@ -67,17 +67,11 @@ const CustomersContainer = ({ companies }) => {
     const currentPath = router.pathname;
     const currentQuery = router.query;
 
-    console.log(currentQuery);
-    console.log(newQuery);
     // Merge current and new query string params
     const queryParams = Object.assign(currentQuery, newQuery);
 
-    console.log(queryParams);
-
     // Remove empty params from query string
     const filteredParams = removeEmpty(queryParams);
-
-    console.log(filteredParams);
 
     router.replace(
       { pathname: currentPath, query: filteredParams },
