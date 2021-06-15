@@ -7,6 +7,7 @@ import CustomerResults from "../components/CustomerResults";
 
 // Services
 import { getCustomerData } from "../services/customers.js";
+import { removeEmpty } from "../utils/removeEmpty.js";
 
 import Paper from "@material-ui/core/Paper";
 
@@ -62,18 +63,45 @@ const CustomersContainer = ({ companies }) => {
     };
   }, [customerSearchQuery, companyId]);
 
+  const addToQueryString = (newQuery) => {
+    const currentPath = router.pathname;
+    const currentQuery = router.query;
+
+    console.log(currentQuery);
+    console.log(newQuery);
+    // Merge current and new query string params
+    const queryParams = Object.assign(currentQuery, newQuery);
+
+    console.log(queryParams);
+
+    // Remove empty params from query string
+    const filteredParams = removeEmpty(queryParams);
+
+    console.log(filteredParams);
+
+    router.replace(
+      { pathname: currentPath, query: filteredParams },
+      undefined,
+      {
+        shallow: true,
+      }
+    );
+  };
+
   const handleUserSearch = (event) => {
     const searchParam = event.target.value;
 
     // Update search query in state
     setCustomerSearchQuery(searchParam);
 
+    addToQueryString({ search: searchParam });
+
     // Set url param
-    const currentPath = router.pathname;
+    /*const currentPath = router.pathname;
     const query = searchParam ? { search: searchParam } : undefined;
     router.replace({ pathname: currentPath, query: query }, undefined, {
       shallow: true,
-    });
+    });*/
   };
 
   const handleCompanyFilter = (event) => {
@@ -87,6 +115,9 @@ const CustomersContainer = ({ companies }) => {
       (company) => company.id === Number(newCompanyId)
     )?.name;
 
+    addToQueryString({ filter_by_company_name: companyName });
+
+    /*
     // Set url param
     const currentPath = router.pathname;
     const query = companyName
@@ -94,7 +125,7 @@ const CustomersContainer = ({ companies }) => {
       : undefined;
     router.replace({ pathname: currentPath, query: query }, undefined, {
       shallow: true,
-    });
+    });*/
   };
 
   return (
