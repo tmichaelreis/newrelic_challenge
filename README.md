@@ -6,7 +6,7 @@ This application consists of a NextJS front-end and Ruby on Rails API.
 
 NextJS is a React framework that offers several advantages over other React toolchains like Create React App or Gatsby. I particularly appreciate the server-side rendering capabilities and default route-based code splitting of NextJS. It's very easy to get started with and doesn't require much effort up front for these additional benefits.
 
-Rails is incredibly convenient for creating REST APIs. Given the simple initial requirements for the customers endpoint, I determined that a single JSON REST endpoint (`/customers`) would be sufficient.
+Rails is incredibly convenient for creating REST APIs. Given the simple initial requirements for the customers endpoint, I determined that a couple of simple JSON endpoints (`/customers` and `/companies`) would be sufficient.
 
 ## Getting Started
 
@@ -14,7 +14,7 @@ Make sure Docker is installed and running on your system.
 
 Start the application from the project root using:
 
-`docker compose up --build`
+`docker compose up -d --build`
 
 Then access the app at localhost:3000.
 
@@ -73,10 +73,11 @@ To run the end-to-end cypress integration tests:
 
    `npm run cypress:open` to open the Cypress GUI
 
-_Note:_ these tests depend on seed data in the `/customer_service` Rails project. The seed data is loaded automatically when the Customer Service API container builds, but if that data is modified, it can cause these tests to fail. Reset the API seed data with:
+These tests depend on seed data in the `/customer_service` Rails project. The seed data is loaded automatically when the Customer Service API container builds, but if that data is modified, it can cause these tests to fail. Reset the API seed data with:
 
 ```
-docker compose down
-rm -rf pg_data
+docker-compose down --volumes
 docker compose up --build
 ```
+
+_Note: --volumes doesn't work for the compose CLI yet, so use the docker-compose version for that command, or use `docker volume rm newrelic_challenge_db` to remove the volume manually_

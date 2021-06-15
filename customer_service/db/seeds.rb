@@ -6,16 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
-## Warning: this data is used for integration testing
-new_relic = Company.create({ name: 'New Relic' })
-la_sportiva = Company.create({ name: 'La Sportiva' })
-
-Customer.create({ first_name: 'Tom', last_name: 'Reis', company: new_relic })
-Customer.create({ first_name: 'Adam', last_name: 'Ondra', company: la_sportiva })
-Customer.create({ first_name: 'Brooke', last_name: 'Raboutou', company: la_sportiva })
-###
-
 # Generate random data
 10.times do
   Company.create({ name: FFaker::Company.name })
@@ -26,3 +16,12 @@ end
                     last_name: FFaker::Name.last_name,
                     company_id: Company.pluck(:id).sample })
 end
+
+## Warning: this data is used for integration testing
+new_relic = Company.create({ name: 'New Relic' })
+la_sportiva = Company.create({ name: 'La Sportiva' })
+
+Customer.create({ first_name: 'Tom', last_name: 'Reis', company: new_relic })
+Customer.create({ first_name: 'Adam', last_name: 'Ondra', company: la_sportiva })
+Customer.create({ first_name: 'Brooke', last_name: 'Raboutou', company: la_sportiva })
+###

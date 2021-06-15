@@ -3,9 +3,10 @@ version: "3"
 services:
   db:
     container_name: postgres
+    restart: always
     image: postgres:13.3-alpine
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -15,6 +16,8 @@ services:
     container_name: customer_service
     hostname: customer-service
     build: ./customer_service
+    environment:
+      - POSTGRES_HOST=db
     volumes:
       - ./customer_service:/app/customer_service
     depends_on:
@@ -32,3 +35,5 @@ services:
       - customer_service
     ports:
       - "3000:3000"
+volumes:
+  db:
