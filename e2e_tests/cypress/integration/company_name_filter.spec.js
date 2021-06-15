@@ -31,6 +31,48 @@ describe("company name filter", () => {
   it("appends company name filter to url", () => {
     cy.get("#company-name-filter").click();
     cy.get("li").contains("La Sportiva").should("exist").click();
-    cy.url().should("include", "?filter_by_company_name=La%20Sportiva");
+    cy.url().should("include", "?filter_by_company_name=La+Sportiva");
+  });
+
+  it("clears results when reselecting all companies", () => {
+    cy.get("#company-name-filter").click();
+    cy.get("li").contains("La Sportiva").should("exist").click();
+
+    // Make sure results initially appear
+    cy.get("#customer-results").contains("Adam").should("exist");
+
+    // Reselect All Companies
+    cy.get("#company-name-filter").click();
+    cy.get("li").contains("All Companies").should("exist").click();
+
+    // Assert user results no longer exist
+    cy.get("#customer-results").contains("Adam").should("not.exist");
+
+    // Assert empty query message shows
+    cy.get("#customer-results").contains(
+      "Use the search and filter options above to view Customer results."
+    );
+  });
+
+  describe("visiting a page with existing query string", () => {
+    beforeEach(() => {
+      cy.visit("/customers?filter_by_company_name=La+Sportiva");
+    });
+
+    it("populates company filter dropdown", () => {
+      cy.get("#company-name-filter").contains("La Sportiva").should("exist");
+    });
+
+    it("populates customer results", () => {
+      cy.get("#customer-results").within(($customersTable) => {
+        // Assert matching user is included
+        cy.get("td").contains("Adam").should("exist");
+        cy.get("td").contains("Ondra").should("exist");
+        cy.get("td").contains("La Sportiva").should("exist");
+
+        // Assert non-matching users aren't included
+        cy.get("td").contains("Tom").should("not.exist");
+      });
+    });
   });
 });
