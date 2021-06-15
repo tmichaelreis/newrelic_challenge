@@ -26,11 +26,9 @@ services:
       - "4000:4000"
   frontend:
     container_name: frontend
-    image: "node:14.17-alpine"
-    working_dir: /app/frontend
+    build: ./frontend
     volumes:
       - ./frontend:/app/frontend
-    command: "npm run dev"
     depends_on:
       - customer_service
     ports:
