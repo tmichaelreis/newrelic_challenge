@@ -22,6 +22,9 @@ describe("simultaneous search and filter", () => {
   it("appends company name filter and search to url", () => {
     cy.get("#customer-search").clear().type("Adam");
     cy.get("#company-name-filter").select("La Sportiva");
-    cy.url().should("include", "?filter_by_company_name=La%20Sportiva");
+    cy.url().should(
+      "include",
+      "?search=Adam&filter_by_company_name=La+Sportiva"
+    );
   });
 });

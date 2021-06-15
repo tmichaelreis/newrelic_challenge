@@ -23,8 +23,17 @@ const CustomersContainer = ({ companies }) => {
   // so we have to wait for the NextJS router to be ready
   useEffect(() => {
     const existingSearchQuery = router.query["search"];
+    const existingCompanyFilter = router.query["filter_by_company_name"];
+
     if (existingSearchQuery) {
       setCustomerSearchQuery(existingSearchQuery);
+    }
+
+    if (existingCompanyFilter) {
+      const existingCompanyId = companies.find(
+        (company) => company.name === existingCompanyFilter
+      )?.id;
+      setCompanyId(existingCompanyId);
     }
   }, [router.isReady]);
 
@@ -34,7 +43,7 @@ const CustomersContainer = ({ companies }) => {
     let ignore = false;
 
     // Get customers from API if search query is not empty
-    if (!!customerSearchQuery) {
+    if (!!(customerSearchQuery || companyId)) {
       getCustomerData({
         search: customerSearchQuery,
         companyFilter: companyId,
@@ -51,7 +60,7 @@ const CustomersContainer = ({ companies }) => {
     return () => {
       ignore = true;
     };
-  }, [customerSearchQuery]);
+  }, [customerSearchQuery, companyId]);
 
   const handleUserSearch = (event) => {
     const searchParam = event.target.value;
@@ -68,11 +77,24 @@ const CustomersContainer = ({ companies }) => {
   };
 
   const handleCompanyFilter = (event) => {
-    setCompanyId(event.target.value);
-    // TODO: get company name from event
-    // TODO: update param in URL
-    // TODO: set loading
-    // TODO: handle filter request to api
+    const newCompanyId = event.target.value;
+
+    // Update company search in state
+    setCompanyId(newCompanyId);
+
+    // Find company name by ID
+    const companyName = companies.find(
+      (company) => company.id === Number(newCompanyId)
+    )?.name;
+
+    // Set url param
+    const currentPath = router.pathname;
+    const query = companyName
+      ? { filter_by_company_name: companyName }
+      : undefined;
+    router.replace({ pathname: currentPath, query: query }, undefined, {
+      shallow: true,
+    });
   };
 
   return (
